@@ -1,56 +1,32 @@
-from django.shortcuts import render,get_object_or_404
-# Create your views here.
-from django.http import HttpResponse,HttpResponseRedirect
-from .models import Question
-from django.template import loader
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views import generic
 
-def index(request):
-    #print("test")
-    #ver1
-    #return HttpResponse("Hello, world. You're at the polls index.")
+from .models import Choice, Question
 
-    #ver2
-    #latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    #output = ', '.join([q.question_text for q in latest_question_list])
-    #return HttpResponse(output)
+# for detail of ListView and DetailView
+# ref: https://docs.djangoproject.com/en/1.10/ref/class-based-views/generic-display/#django.views.generic.detail.DetailView
 
-    #ver3
-    #latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    #template = loader.get_template('polls/index.html')
-    #context = {
-    #    'latest_question_list': latest_question_list,
-    #}
-    #return HttpResponse(template.render(context, request))
-
-    #ver4
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'polls/index.html', context)
-
-def detail(request, question_id):
-    #ver1
-    #return HttpResponse("You're looking at question %s." % question_id)
-
-    #ver2
-    #try:
-    #    question = Question.objects.get(pk=question_id)
-    #except Question.DoesNotExist:
-    #    raise Http404("Question does not exist")
-
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+    # get_queryset() is a default method from ListView,We over write it here.
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
 
 
-# ex: http://127.0.0.1:8000/polls/5/results/
-# detail(request=<HttpRequest object>, question_id='5')
-def results(request, question_id):
-    #response = "You're looking at the results of question %s."
-    #return HttpResponse(response % question_id)
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
 
-    
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
+
+# vote keep in the same code. Because it is use to count ++ the vote
 def vote(request, question_id):
     #return HttpResponse("You're voting on question %s." % question_id)
     question = get_object_or_404(Question, pk=question_id)
