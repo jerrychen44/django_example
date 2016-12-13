@@ -1,20 +1,31 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-        <meta charset="utf-8">
-        <title>title</title>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>title</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{%  static 'polls/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Ourown CSS, since we have bootstrap, we don't need it anymore -->
+    <!-- <link href="{%  static 'polls/style.css' %}" rel="stylesheet" type="text/css"/>-->
   </head>
 
   <body>
-    <hr>
-    <p> Header </p>
-    <hr>
 
-    {% block main_content %}
-    {% endblock %}
+    {% include "polls/header.html" %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
 
-    {% include "polls/footer.html" %}
+        {% block main_content %}
+        {% endblock %}
+        {% include "polls/footer.html" %}
+      </div>
+    </div>
+
+
 
   </body>
 </html>
