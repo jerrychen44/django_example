@@ -51,14 +51,37 @@ def index_ver2_return_N_latest_question_we_have(request):
 
     #What's your name?, what's your age? <class 'str'>
     '''
+
+    '''
+        但我們不只想要回傳一行字串而已, 希望能給回傳一個真正的網頁
+        去my_polls_app folder 下面新增一個templates/my_polls_app/index.html
+        之後回傳這個index.html for index request
+    '''
     return HttpResponse(output_str)
 
 
 
+from django.template import loader, RequestContext
+def index_ver3_use_templates(request):
+    N=5
+    latest_N_question = Question.objects.order_by('published_date')[:N]
+
+    # 這行會讓django 去 templats/my_polls_app/index.html 找東西show
+    template = loader.get_template('my_polls_app/index.html')
 
 
+    # 接著你要把這裡收到的 request 在一起傳過去 index.html 讓他也可以用
+    # 不然 他怎麼知道你 當初 url/ 後面帶的 question id
+    # 還有可以自定義一些變數用字典的方式傳過去,
+    # 在這裡我們傳過去已經知道的最新N 個 question, 讓index.html 可以render
+    context = RequestContext(request,{
 
+                                        'latest_N_question':latest_N_question
+                                        }
+                            )
 
+    # 我們把context 丟給 templates, 且叫他render 出來
+    return HttpResponse(template.render(context))
 
 '''
 所以關於設計上:
