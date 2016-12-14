@@ -5,12 +5,17 @@
 <!-- 我們希望能在 index 中列出所有 問題, 且是以連結顯示-->
 <!-- 每個 question obj 有 question_text , published_date 可以用 (check the models.py)-->
 
+<!-- <h1>+++ {% url "my_polls_app:detail"  2 %} +++</h1> -->
+
 
 {% if latest_N_question %}
   <ul>
     {% for question in latest_N_question %}
       <!-- 如果懷疑為什麼 question.id 可以用, 去 views.py , 那邊有解釋-->
-      <li><a href='/my_polls_app/{{ question.id }}'><b>{{question.question_text}}</b></a></li>
+      <!-- <li><a href='/my_polls_app/{{ question.id }}'><b>{{question.question_text}}</b></a></li> -->
+      <!-- 把網址改成動態的, 利用 url 這個全域變數-->
+
+      <li><a href="{% url "my_polls_app:detail" question.id  %}" ><b>{{question.question_text}}</b></a></li>
 
     {% endfor %}
   </ul>

@@ -22,5 +22,5 @@ urlpatterns = [
     # which means we direct the http://127.0.0.1:8000/my_polls_app/
     # to my_polls_app/urls.py to get more information
     # => So, we need to add urls.py under my_polls_app/ folder
-    url(r'^my_polls_app/', include('my_polls_app.urls')),
+    url(r'^my_polls_app/', include('my_polls_app.urls',namespace="my_polls_app")),
 ]
