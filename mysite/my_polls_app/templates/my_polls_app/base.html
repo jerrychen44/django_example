@@ -10,13 +10,15 @@
     <hr>
     <p> Header <p>
     <hr>
-    <!--    定義一個 main_content block , 在endblock 之間要show 的,    -->
-    <!--    會去找看哪知html 有 extends base.html 且當中也有同樣一個 main_content block    -->
-
-    <!--    所以反過來說, 去那些 index.html , detail.html 把它用 main_content 包住, 這樣就會一起show    -->
-    <!--    出來 base.html 的內容了(前面加上 extends 'my_polls_app/base.html')    -->
+    <!--定義一個 main_content block , 在endblock 之間要show 的,-->
+    <!--會去找看哪知html 有 extends base.html 且當中也有同樣一個 main_content block-->
+    <!--所以反過來說, 去那些 index.html , detail.html 把它用 main_content 包住, 這樣就會一起show-->
+    <!--出來 base.html 的內容了(前面加上 extends 'my_polls_app/base.html')-->
     {% block main_content %}
     {% endblock %}
+
+    <!--include other html to show here-->
+    {% include "my_polls_app/footer.html" %}
 
 
   </body>
