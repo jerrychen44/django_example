@@ -30,8 +30,8 @@ urlpatterns = [
     # 因為你要傳入 url/1/ 當中的 1 , 塞給 question_id 丟去views
     # url = 127.0.0.1:8000/my_polls_app/2
     #url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
-    url(r'^(?P<question_id>[0-9]+)/$', views.detail_ver2, name='detail'),
-
+    #url(r'^(?P<question_id>[0-9]+)/$', views.detail_ver2, name='detail'),
+    url(r'^(?P<question_id>[0-9]+)/$', views.detail_ver3_get_object_or_404, name='detail'),
 
 
     # for vote page

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 # 每個function 代表你想要呈現某種 頁面
 # 因為你可以預期, 每個function 最後要return 回給request 一個 html page, 這樣
 # 人輸入的某個網址 , 才會得到這個html return, 才會有東西可以看
@@ -179,6 +179,13 @@ def detail_ver2(request,question_id):
     print(question.choice_set.all())
     # <QuerySet [<Choice: bob>, <Choice: rachel>, <Choice: fred>]>
     return render(request,'my_polls_app/detail.html',{'question':question})
+
+def detail_ver3_get_object_or_404(request,question_id):
+    # get the obj , if can't get it, raise a 404 error
+    question = get_object_or_404(Question,pk=question_id)
+    return render(request,'my_polls_app/detail.html',{'question':question})
+
+
 
 
 
