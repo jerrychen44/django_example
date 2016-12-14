@@ -2,7 +2,11 @@
 {% extends 'my_polls_app/base.html'%}
 {% block main_content %}
 
-<h1>{{ question.question_text}}</h1>
+{% if error_message %}
+  <p><strong>{{ error_message}}</strong></p>
+{% endif %}
+
+<h1>Question: {{ question.question_text}}</h1>
 
 <ul>
   {% for choice in question.choice_set.all %}
