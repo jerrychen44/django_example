@@ -102,6 +102,7 @@ def index_ver3_use_templates(request):
     '''
     print(latest_N_question[0].id ,latest_N_question[0].pk, latest_N_question[0].choice_set)
     # 1 1 my_polls_app.Choice.None
+    # .id 是 url 的 id,  .pk 是 db 裡面的主key
     print(latest_N_question[0].published_date ,latest_N_question[0].question_text)
     #2016-12-13 15:05:31+00:00 What's your name?
 
@@ -117,7 +118,6 @@ def index_ver3_use_templates(request):
     # 還有可以自定義一些變數用字典的方式傳過去,
     # 在這裡我們傳過去已經知道的最新N 個 question, 讓index.html 可以render
     context = RequestContext(request,{
-
                                         'latest_N_question':latest_N_question
                                         }
                             )
@@ -139,7 +139,7 @@ def index_ver4_use_shortcut_render(request):
 
 
 
-    
+
 '''
 所以關於設計上:
 上面有個 index 是基本上合理的, 就是首頁
@@ -170,6 +170,17 @@ PS2:
 '''
 def detail(request,question_id):
     return HttpResponse("This is detail view, called by http://127.0.0.1:8000/my_polls_app/%s/"%question_id)
+
+def detail_ver2(request,question_id):
+    #先拿到目前準備要處理的 question obj, 藉由傳入的 question_id 去 db 撈
+    question = Question.objects.get(pk=question_id)
+
+    # 你可以得到相對應的選項, 之後在html 這樣用吧, 但小心 .all() 括號要在html 中拿掉 變成 question.choice_set.all
+    print(question.choice_set.all())
+    # <QuerySet [<Choice: bob>, <Choice: rachel>, <Choice: fred>]>
+    return render(request,'my_polls_app/detail.html',{'question':question})
+
+
 
 #for page 2: vote
 def vote(request,question_id):
