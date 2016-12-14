@@ -5,9 +5,59 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 # Create your views here.
-def index_my(request):
-    print("Get it")
+def index_ver1(request):
+    print("Get it=> will print to the shell as system log")
     return HttpResponse("This is index function in views.py, which called by http://127.0.0.1:8000/my_polls_app/")
+
+from .models import Question
+def index_ver2_return_N_latest_question_we_have(request):
+    N=5
+    '''published_date 是當初你在model 定義的一個欄位名稱'''
+    latest_N_question = Question.objects.order_by('published_date')[:N]
+    print(latest_N_question,type(latest_N_question))
+    '''
+        What's your name?what's your age?
+        <class 'django.db.models.query.QuerySet'>
+    '''
+
+
+    ###########################
+    # iterate the query set: slow navie way
+    ###########################
+    output=[]
+    for question in latest_N_question:
+        print(question.question_text,type(question.question_text))
+
+        #What's your name? <class 'str'>
+        #what's your age? <class 'str'>
+
+        output.append(question.question_text)
+
+    print(output)
+
+    #["What's your name?", "what's your age?"]
+
+    output_str=", ".join(output)
+    print(output_str,type(output_str))
+
+    #What's your name?, what's your age?
+
+    '''
+    #################
+    # fast way: the same with slow way
+    ##################
+    output_str=", ".join(q.question_text for q in latest_N_question)
+    print(output_str,type(output_str))
+
+    #What's your name?, what's your age? <class 'str'>
+    '''
+    return HttpResponse(output_str)
+
+
+
+
+
+
 
 
 '''

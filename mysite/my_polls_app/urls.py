@@ -15,7 +15,9 @@ from . import views
 urlpatterns = [
     # views.index = (file name).(function name)
     # url = 127.0.0.1:8000/my_polls_app/
-    url(r'^$', views.index_my, name='index'),
+
+    #url(r'^$', views.index_ver1, name='index'),
+    url(r'^$', views.index_ver2_return_N_latest_question_we_have, name='index'),
     # r'^$' means don't change anything from the url
     # which means url here equal to  127.0.0.1:8000/my_polls_app/
     # and if so, I want to direct to views.index function
