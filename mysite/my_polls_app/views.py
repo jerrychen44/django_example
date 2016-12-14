@@ -61,8 +61,9 @@ def index_ver2_return_N_latest_question_we_have(request):
 
 
 
-from django.template import loader, RequestContext
+
 def index_ver3_use_templates(request):
+    from django.template import loader, RequestContext
     N=5
     latest_N_question = Question.objects.order_by('published_date')[:N]
 
@@ -124,6 +125,21 @@ def index_ver3_use_templates(request):
     # 我們把context 丟給 templates, 且叫他render 出來
     return HttpResponse(template.render(context))
 
+
+
+def index_ver4_use_shortcut_render(request):
+    N=5
+    latest_N_question = Question.objects.order_by('published_date')[:N]
+    context = {'latest_N_question':latest_N_question}
+    return HttpResponse(render(request,'my_polls_app/index.html',context))
+
+
+
+
+
+
+
+    
 '''
 所以關於設計上:
 上面有個 index 是基本上合理的, 就是首頁
