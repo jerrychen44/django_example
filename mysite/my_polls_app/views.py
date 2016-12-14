@@ -66,6 +66,47 @@ def index_ver3_use_templates(request):
     N=5
     latest_N_question = Question.objects.order_by('published_date')[:N]
 
+    print(request)
+    print(latest_N_question)
+    print(latest_N_question[0],type(latest_N_question[0]))
+    '''
+    <WSGIRequest: GET '/my_polls_app/'>
+    <QuerySet [<Question: What's your name?>, <Question: what's your age?>]>
+    What's your name? <class 'my_polls_app.models.Question'>
+    '''
+    ''' 所以上面可以知道, 每個item 在 latest_N_question 中的就是一個 Question obj'''
+    '''
+        再由下面列出可知道, 這些obj 有自己的 id, 而這個id 等同於 127.0.0.0:8000/my_polls_app/id
+        所以現在已經有question 的obj 了, 要知道他的網址 就是 127.0.0.0:8000/my_polls_app/obj.id
+        => 下面我們把這個latest_N_question 丟給html , 所以html 中可以用上面的網址做出對應的連結
+    '''
+    print(dir(latest_N_question[0]))
+    '''
+    ['DoesNotExist', 'MultipleObjectsReturned', '__class__', '__delattr__', '__dict__',
+    '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__',
+    '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__',
+     '__reduce_ex__', '__repr__', '__setattr__', '__setstate__', '__sizeof__', '__str__',
+      '__subclasshook__', '__weakref__', '_check_column_name_clashes', '_check_field_name_clashes',
+       '_check_fields', '_check_id_field', '_check_index_together', '_check_local_fields',
+        '_check_long_column_names', '_check_m2m_through_same_relationship', '_check_managers',
+         '_check_model', '_check_ordering', '_check_swappable', '_check_unique_together',
+          '_do_insert', '_do_update', '_get_FIELD_display', '_get_next_or_previous_by_FIELD',
+           '_get_next_or_previous_in_order', '_get_pk_val', '_get_unique_checks', '_meta',
+            '_perform_date_checks', '_perform_unique_checks', '_save_parents', '_save_table',
+             '_set_pk_val', '_state', 'check', 'choice_set', 'clean', 'clean_fields',
+              'date_error_message', 'delete', 'from_db', 'full_clean', 'get_deferred_fields',
+              'get_next_by_published_date', 'get_previous_by_published_date', 'id', 'objects', 'pk',
+              'prepare_database_save', 'published_date', 'question_text', 'refresh_from_db', 'save',
+              'save_base', 'serializable_value', 'unique_error_message', 'validate_unique']
+    '''
+    print(latest_N_question[0].id ,latest_N_question[0].pk, latest_N_question[0].choice_set)
+    # 1 1 my_polls_app.Choice.None
+    print(latest_N_question[0].published_date ,latest_N_question[0].question_text)
+    #2016-12-13 15:05:31+00:00 What's your name?
+
+
+
+
     # 這行會讓django 去 templats/my_polls_app/index.html 找東西show
     template = loader.get_template('my_polls_app/index.html')
 
