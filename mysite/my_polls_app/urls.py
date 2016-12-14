@@ -8,7 +8,8 @@ from . import views
 # that is why we need import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    # views.index = (file name).(function name)
+    url(r'^$', views.index_my, name='index'),
     # r'^$' means don't change anything from the url
     # which means url here equal to  127.0.0.1:8000/my_polls_app/
     # and if so, I want to direct to views.index function
