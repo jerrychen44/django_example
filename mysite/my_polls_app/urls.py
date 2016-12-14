@@ -36,8 +36,8 @@ urlpatterns = [
 
     # for vote page
     # url = 127.0.0.1:8000/my_polls_app/2/vote
-    url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
-
+    #url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
+    url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote_ver2_getrequest_from_detail_form, name='vote'),
 
 
 

@@ -23,4 +23,5 @@ urlpatterns = [
     # to my_polls_app/urls.py to get more information
     # => So, we need to add urls.py under my_polls_app/ folder
     url(r'^my_polls_app/', include('my_polls_app.urls',namespace="my_polls_app")),
+    # 加 namespace 是為了不要搞混app, 且讓 url 'my_polls_app:xxxx' 可以用
 ]

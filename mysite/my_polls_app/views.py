@@ -3,7 +3,10 @@ from django.shortcuts import render,get_object_or_404
 # 因為你可以預期, 每個function 最後要return 回給request 一個 html page, 這樣
 # 人輸入的某個網址 , 才會得到這個html return, 才會有東西可以看
 
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
+
+from django.core.urlresolvers import reverse
+
 # Create your views here.
 def index_ver1(request):
     print("Get it=> will print to the shell as system log")
@@ -192,6 +195,28 @@ def detail_ver3_get_object_or_404(request,question_id):
 #for page 2: vote
 def vote(request,question_id):
     return HttpResponse("This is vote view, called by http://127.0.0.1:8000/my_polls_app/%s/vote/"%question_id)
+
+
+
+def vote_ver2_getrequest_from_detail_form(request,question_id):
+    question = get_object_or_404(Question,pk=question_id)
+
+    # it is possible thet user doesn't select anything but press the submit button
+    try:
+        selected_choice = question.choice_set.get(pk= request.POST['choice'])
+    except:
+        #if can not find the selected choice_set
+        return render(request,'my_polls_app/detail.html',{'question':question,'error_message':"[ERROR] Please select a choice"})
+    else:
+        # we actually get a vote
+        selected_choice.vote += 1
+        selected_choice.save()
+
+        # 這次不是要回一個頁面的結果(result.html), 而是希望先繞回到views 的 def result function
+        # 所以用redirect. !! args=(A,B,C,)  最後要留 ,  因為是一個序列
+        return HttpResponseRedirect(reverse('my_polls_app:results', args=(question.id,)) )
+
+
 
 # for page3 : results
 def results(request,question_id):
