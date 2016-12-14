@@ -1,6 +1,7 @@
 
-<!-- 你預期會得到 views 中 index function 的 呼叫, 且有個變數
-      latest_N_question 可以用, 因為 return HttpResponse(template.render(context)) 我們自己塞過來的-->
+{% extends 'my_polls_app/base.html'%}
+{% block main_content %}
+<!-- 你預期會得到 views 中 index function 的 呼叫, 且有個變數latest_N_question 可以用, 因為 return HttpResponse(template.render(context)) 我們自己塞過來的-->
 <!-- 我們希望能在 index 中列出所有 問題, 且是以連結顯示-->
 <!-- 每個 question obj 有 question_text , published_date 可以用 (check the models.py)-->
 
@@ -16,3 +17,5 @@
 {% else %}
   <p>You don't have any question to show. Please add some.</p>
 {% endif %}
+
+{% endblock %}
