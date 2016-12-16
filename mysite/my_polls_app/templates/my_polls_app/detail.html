@@ -19,7 +19,7 @@
 <!--ref: http://www.wibibi.com/info.php?tid=188
     <form action="送出目的地" method="資料傳送方式"> -->
 <form action="{% url 'my_polls_app:vote' question.id %}" method="post">
-  {% csrf_token %}<!-- csrf_token 是為了要在html 中存取 database 用的-->
+  {% csrf_token %}<!-- csrf_token 是為了要在html 中存取 database 用的, post 要用-->
   {% for choice in question.choice_set.all  %}
     <input type="radio" name="choice" id='choice{{forloop.counter}}' value="{{choice.id}}" >
     <label for='choice{{forloop.counter}}'>{{choice.choice_text}}</label><br>

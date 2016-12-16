@@ -221,3 +221,9 @@ def vote_ver2_getrequest_from_detail_form(request,question_id):
 # for page3 : results
 def results(request,question_id):
     return HttpResponse("This is results view, called by http://127.0.0.1:8000/my_polls_app/%s/results/"%question_id)
+
+
+
+def results_ver1(request,question_id):
+    question = get_object_or_404(Question,pk=question_id)
+    return render(request,'my_polls_app/results.html',{'question':question})

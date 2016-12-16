@@ -43,6 +43,6 @@ urlpatterns = [
 
     # for results page
     # url = 127.0.0.1:8000/my_polls_app/2/results
-    url(r'^(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
-
+    #url(r'^(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
+    url(r'^(?P<question_id>[0-9]+)/results/$', views.results_ver1, name='results'),
 ]
